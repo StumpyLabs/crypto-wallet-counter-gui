@@ -12,7 +12,7 @@ def coinRaw(coin):
 
     response = requests.get(url, headers=headers)
 
-    return response
+    return response.text
 
 
 # list of available coins
