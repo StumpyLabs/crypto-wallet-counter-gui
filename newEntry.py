@@ -1,6 +1,8 @@
 import coingeckoCalls
 from datetime import datetime
 import json
+
+import history
 import pyMongoDB as db
 
 currentDateAndTime = datetime.now()
@@ -11,8 +13,10 @@ geckoListCheck = coingeckoCalls.coinsList()
 dictionaryListCheck = json.loads(geckoListCheck)
 
 
-def newEntry():
-    customerName = input("Enter Name: ")
+def newEntry(customerName):
+    if customerName == "-New User-":
+        print("\n" + "Enter Name (First Last) eg: John Doe")
+        customerName = input("Enter Name: ")
 
     continueEntry = True
     while (continueEntry == True):
@@ -42,6 +46,12 @@ def newEntry():
                 continueEntry = True
             else:
                 continueEntry = False
+
+
+def nameChecker(name):
+    nameList = history.nameListBuilder()
+    if name not in nameList:
+        history.nameListBuilder()
 
 
 def coinChecker(customerInput):

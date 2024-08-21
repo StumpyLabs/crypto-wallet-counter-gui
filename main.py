@@ -1,16 +1,19 @@
 from tkinter import *
 
 import history
-import tkinterApp as ta
+import tkWelcome as ta
 import newEntry as ne
 
 
 def main():
-    # root = Tk()
-    # ta.startApp(root)
+    root = Tk()
+    ta.startApp(root)
     # ne.newEntry()
-    history.nameListBuilder()
-    history.searchDB()
+    # history.nameListBuilder()
+    #history.runNames()
+    #history.searchDB()
+    #history.nameListApp()
+    #print(type("QWERTY", "Dvorak", "Colemak", "Workman"))
 
 
 if __name__ == '__main__':

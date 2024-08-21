@@ -8,15 +8,66 @@ def nameListBuilder():
     for i in result:
         if i["customerName"] not in nameList:
             nameList.append(i["customerName"])
-    print(nameList)
+    print("Name List: " + str(nameList))
+    return nameList
 
 
-def searchDB():
-    result = db.collection.find({"customerName": "casey", "customerCoin": "bitcoin"})
+# list of user in DB
+def nameListApp():
+    nameList = ["-New User-"]
+    result = db.collection.find()
+    for i in result:
+        if i["customerName"] not in nameList:
+            nameList.append(i["customerName"])
+    return nameList
+
+
+# list of user's coins in DB
+def nameCoinListBuilder(customerName):
+    coinList = []
+    result = db.collection.find({"customerName": customerName})
+    for i in result:
+        if i["customerCoin"] not in coinList:
+            coinList.append(i["customerCoin"])
+    print(customerName + "'s coin list: " + str(coinList))
+    return coinList
+
+
+def runNames():
+    nameList = nameListBuilder()
+    for i in nameList:
+        accountTotal = 0
+        print("Customer Name: " + i)
+        coinList = nameCoinListBuilder(i)
+        for coin in coinList:
+            coinTotal = searchCoinNameDB(i, coin)
+            accountTotal += coinTotal
+            print(coin + ": " + str(coinTotal))
+        print("Account Total: " + str(accountTotal))
+
+
+def searchNameDB(customerName):
+    result = db.collection.find({"customerName": customerName})
     total = 0
     for i in result:
         total += i["totalAmount"]
-    print(total)
+    return total
+
+
+def searchCoinDB(customerCoin):
+    result = db.collection.find({"customerCoin": customerCoin})
+    total = 0
+    for i in result:
+        total += i["totalAmount"]
+    return total
+
+
+def searchCoinNameDB(customerName, customerCoin):
+    result = db.collection.find({"customerName": customerName, "customerCoin": customerCoin})
+    total = 0
+    for i in result:
+        total += i["totalAmount"]
+    return total
 
 
 # delete last input to the DB
