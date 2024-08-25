@@ -3,43 +3,56 @@ import time
 import threading
 from tkinter import messagebox
 
+import history
+
 
 def runRegisteredUser(root, layout):
     # Creates Toplevel
     registeredWindow = Toplevel(root)
     registeredWindow.title(layout + "'s Wallet Counter")
-    registeredWindow.geometry("2300x700")
+    registeredWindow.geometry("1500x2200")
 
     # Welcome Label
-    header = Label(registeredWindow, text="Please enter all of your coins bought in this time frame",
-                   font=("Cambria", 25, "bold"))
+    header = Label(registeredWindow, text="Below is current coin History",
+                   font=("Cambria", 18, "bold"))
     header.place(y=10)
     header.pack()
 
-    def display_info():
-        # Get input from entry fields
-        customer_name = entry_name.get()
-        customer_email = entry_email.get()
+    coinFrameHistory = Frame(registeredWindow)
+    coinFrameHistory.pack()
+    historyString = str(history.runNames(layout))
+    print(historyString)
+    historyLabel = Label(registeredWindow, text=historyString)
+    historyLabel.pack()
+    # Buttons on bottom Frame Build built from bottom 3
+    buttons = Frame(registeredWindow)
+    buttons.pack(side=BOTTOM, pady=10)
+    close_button = Button(buttons, text="Submit", command=registeredWindow.destroy)
+    close_button.pack(side=LEFT)
+    close_button = Button(buttons, text="Close", command=registeredWindow.destroy)
+    close_button.pack(padx=15)
 
-        # Display the customer information
-        messagebox.showinfo("Customer Information", f"Name: {customer_name}\nEmail: {customer_email}")
+    # Entry's on bottom; built from bottom up 2
+    coinFrameEntry = Entry(registeredWindow)
+    coinFrameEntry.pack(side=BOTTOM, pady=10)
 
-    # Labels and Entry fields
-    label_name = Label(registeredWindow, text="Name:")
-    label_name.pack(pady=5)
-    entry_name = Entry(registeredWindow, width=40)
-    entry_name.pack(pady=5)
+    # Entry's on bottom; built from bottom up 1
+    coinFrameLabel = Frame(registeredWindow)
+    coinFrameLabel.pack(side=BOTTOM, pady=10)
 
-    label_email = Label(registeredWindow, text="Email:")
-    label_email.pack(pady=5)
-    entry_email = Entry(registeredWindow, width=40)
-    entry_email.pack(pady=5)
+    # Coin Label Entry
+    coinLabel = Label(coinFrameLabel, text="Enter Coin" + "\n" + "eg: bitcoin, ethereum", font=("Helvetica", 12))
+    coinLabel.pack(side=LEFT, padx=10)
+    coinEntry = Entry(coinFrameEntry, width=22)
+    coinEntry.pack(side=LEFT)
 
-    # Button to trigger the display function
-    submit_button = Button(registeredWindow, text="Submit", command=display_info)
-    submit_button.pack(pady=20)
+    # Amount Label Entry
+    amountLabel = Label(coinFrameLabel, text="Enter Amount of Coin" + "\n" + "eg: 3.5673235", font=("Helvetica", 12))
+    amountLabel.pack(side=RIGHT)
+    amountEntry = Entry(coinFrameEntry, width=22)
+    amountEntry.pack(side=RIGHT)
 
-    close_button = Button(registeredWindow, text="Close", command=registeredWindow.destroy)
-    close_button.pack(pady=10)
 
     root.withdraw()
+
+

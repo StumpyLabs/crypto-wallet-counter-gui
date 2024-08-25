@@ -33,17 +33,18 @@ def nameCoinListBuilder(customerName):
     return coinList
 
 
-def runNames():
+def runNames(name):
     nameList = nameListBuilder()
+    stringBuilder = ""
     for i in nameList:
-        accountTotal = 0
-        print("Customer Name: " + i)
-        coinList = nameCoinListBuilder(i)
-        for coin in coinList:
-            coinTotal = searchCoinNameDB(i, coin)
-            accountTotal += coinTotal
-            print(coin + ": " + str(coinTotal))
-        print("Account Total: " + str(accountTotal))
+        if i == name:
+            accountTotal = 0
+            coinList = nameCoinListBuilder(i)
+            for coin in coinList:
+                coinTotal = searchCoinNameDB(i, coin)
+                accountTotal += coinTotal
+                stringBuilder += (coin + ": " + str(coinTotal) + "\n")
+            stringBuilder += ("Account Total: " + str(accountTotal))
 
 
 def searchNameDB(customerName):
