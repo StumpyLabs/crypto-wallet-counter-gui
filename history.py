@@ -1,4 +1,6 @@
+import coingeckoCalls
 import pyMongoDB as db
+import json
 
 
 # list of user in DB
@@ -38,13 +40,21 @@ def runNames(name):
     stringBuilder = ""
     for i in nameList:
         if i == name:
-            accountTotal = 0
             coinList = nameCoinListBuilder(i)
-            for coin in coinList:
+            print(name + "'s coin list: " + str(coinList))
+
+            accountTotal = 0
+            for coin in coinList[:-1]:
                 coinTotal = searchCoinNameDB(i, coin)
+                # coinValue = coingeckoCalls.coinRaw(coin)
+                # coinValue = json.loads(coinValue)
+                # coinValue = coinValue['current_price'  ]
+                # print(coin + "coins value: " + coinValue)
                 accountTotal += coinTotal
-                stringBuilder += (coin + ": " + str(coinTotal) + "\n")
-            stringBuilder += ("Account Total: " + str(accountTotal))
+                stringBuilder += (coin + ": Coin Amount:" + str(coinTotal) + "\n")
+            coinTotal = searchCoinNameDB(i, coinList[-1])
+            stringBuilder += (coinList[-1] + ": Coin Amount:" + str(coinTotal))
+            return stringBuilder
 
 
 def searchNameDB(customerName):
