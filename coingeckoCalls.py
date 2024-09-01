@@ -12,7 +12,9 @@ def coinRaw(coin):
 
     response = requests.get(url, headers=headers)
 
-    return response.text
+    return response.json()
+
+# {'litecoin': {'usd': 64.33, 'usd_market_cap': 4819562744.372241, 'usd_24h_vol': 252775247.62769628, 'usd_24h_change': -2.156274411313065}}
 
 
 # list of available coins

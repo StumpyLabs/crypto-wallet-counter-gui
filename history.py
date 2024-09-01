@@ -10,7 +10,6 @@ def nameListBuilder():
     for i in result:
         if i["customerName"] not in nameList:
             nameList.append(i["customerName"])
-    print("Name List: " + str(nameList))
     return nameList
 
 
@@ -25,36 +24,43 @@ def nameListApp():
 
 
 # list of user's coins in DB
-def nameCoinListBuilder(customerName):
-    coinList = []
+def walletListBuilder(customerName):
+    walletList = []
     result = db.collection.find({"customerName": customerName})
     for i in result:
+        if i["customerWallet"] not in walletList:
+            walletList.append(i["customerWallet"])
+    return walletList
+
+
+# list of user's coins in DB
+def walletCoinListBuilder(customerName, customerWallet):
+    coinList = []
+    result = db.collection.find({"customerName": customerName, "customerWallet": customerWallet})
+    for i in result:
+
         if i["customerCoin"] not in coinList:
             coinList.append(i["customerCoin"])
-    print(customerName + "'s coin list: " + str(coinList))
     return coinList
 
 
-def runNames(name):
-    nameList = nameListBuilder()
-    stringBuilder = ""
-    for i in nameList:
-        if i == name:
-            coinList = nameCoinListBuilder(i)
-            print(name + "'s coin list: " + str(coinList))
+def runWallets(name, wallet):
+    coinListWallet = walletCoinListBuilder(name, wallet)
 
-            accountTotal = 0
-            for coin in coinList[:-1]:
-                coinTotal = searchCoinNameDB(i, coin)
-                # coinValue = coingeckoCalls.coinRaw(coin)
-                # coinValue = json.loads(coinValue)
-                # coinValue = coinValue['current_price'  ]
-                # print(coin + "coins value: " + coinValue)
-                accountTotal += coinTotal
-                stringBuilder += (coin + ": Coin Amount:" + str(coinTotal) + "\n")
-            coinTotal = searchCoinNameDB(i, coinList[-1])
-            stringBuilder += (coinList[-1] + ": Coin Amount:" + str(coinTotal))
-            return stringBuilder
+    stringBuilder = ""
+    for coin in coinListWallet:
+        coinAmount = searchCoinNameDB(name, coin, wallet)
+        coinValue = coingeckoCalls.coinRaw(coin)
+
+        # coin amount
+        stringBuilder += (coin + ": " + str(coinAmount) + "\n")
+        coinTotal = searchCoinNameDB(name, coinListWallet[-1], wallet)
+        coinTotal = coinValue[coin]["usd"] * coinTotal
+        stringBuilder += (coinListWallet[-1] + ": Coin Amount: " + str(coinAmount) + " Coin Value: $" +
+                          str(coinValue[coin]["usd"]) + " Coin Total: $" + str(coinTotal) + "\n")
+
+        print(str(stringBuilder))
+    return str(stringBuilder)
 
 
 def searchNameDB(customerName):
@@ -65,19 +71,20 @@ def searchNameDB(customerName):
     return total
 
 
-def searchCoinDB(customerCoin):
-    result = db.collection.find({"customerCoin": customerCoin})
+def searchCoinDB(customerCoin, customerWallet):
+    result = db.collection.find({"customerCoin": customerCoin, "customerWallet": customerWallet})
     total = 0
     for i in result:
         total += i["totalAmount"]
     return total
 
 
-def searchCoinNameDB(customerName, customerCoin):
-    result = db.collection.find({"customerName": customerName, "customerCoin": customerCoin})
+def searchCoinNameDB(customerName, customerCoin, customerWallet):
+    result = db.collection.find(
+        {"customerName": customerName, "customerCoin": customerCoin, "customerWallet": customerWallet})
     total = 0
     for i in result:
-        total += i["totalAmount"]
+        total += i["customerAmount"]
     return total
 
 

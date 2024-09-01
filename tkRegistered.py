@@ -4,13 +4,15 @@ import threading
 from tkinter import messagebox
 
 import history
+import tkError
+import tkNewUser
 
 
 def runRegisteredUser(root, layout):
     # Creates Toplevel
     registeredWindow = Toplevel(root)
     registeredWindow.title(layout + "'s Wallet Counter")
-    registeredWindow.geometry("800x500")
+    registeredWindow.geometry("1600x1600")
 
     # Welcome Label
     header = Label(registeredWindow, text=layout + "'s Current Wallet('s) Amount",
@@ -18,10 +20,38 @@ def runRegisteredUser(root, layout):
     header.place(y=10)
     header.pack(pady=10)
 
+    # Wallet Selector
+
+
+    # Select Person Button
+    selectedWallet = StringVar(registeredWindow)
+    selectedWallet.set("-Select Wallet-")
+
+    ownerMenu = OptionMenu(registeredWindow, selectedWallet, *history.walletCoinListBuilder(layout, "Main"))
+    ownerMenu.pack()
+    ownerMenu.config(font=("Cambria", 15, "bold"))
+
+    # Padding
+    label = Label(root, text="")
+    label.pack(padx=(0, 5), pady=(5, 0))
+
+    # Start Button
+    def startApp():
+        layout = selectedWallet.get()
+        if layout == "-Select Wallet-":
+            tkError.errorWindow(registeredWindow)
+        elif layout == "-New User-":
+            tkNewUser.runNewUser(registeredWindow)
+        else:
+            runRegisteredUser(root, layout)
+
+    # button = Button(registeredWindow, text="Start", command=startApp, height=1, width=6, font=("Cambria", 15, "bold"))
+    # button.pack()
+
+    # coin builder for current wallet
     coinFrameHistory = Frame(registeredWindow, borderwidth=5, background="black")
     coinFrameHistory.pack(pady=25)
-    historyString = str(history.runNames(layout))
-    print("This is test: " + "\n" + historyString)
+    historyString = str(history.runWallets(layout, "Main"))
     historyLabel = Label(coinFrameHistory, text=historyString, justify=LEFT)
     historyLabel.pack()
 
