@@ -59,7 +59,6 @@ def runWallets(name, wallet):
         stringBuilder += (coinListWallet[-1] + ": Coin Amount: " + str(coinAmount) + " Coin Value: $" +
                           str(coinValue[coin]["usd"]) + " Coin Total: $" + str(coinTotal) + "\n")
 
-        print(str(stringBuilder))
     return str(stringBuilder)
 
 

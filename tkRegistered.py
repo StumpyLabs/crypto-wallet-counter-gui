@@ -27,7 +27,7 @@ def runRegisteredUser(root, layout):
     selectedWallet = StringVar(registeredWindow)
     selectedWallet.set("-Select Wallet-")
 
-    ownerMenu = OptionMenu(registeredWindow, selectedWallet, *history.walletCoinListBuilder(layout, "Main"))
+    ownerMenu = OptionMenu(registeredWindow, selectedWallet, *history.walletListBuilder(layout))
     ownerMenu.pack()
     ownerMenu.config(font=("Cambria", 15, "bold"))
 
@@ -35,21 +35,21 @@ def runRegisteredUser(root, layout):
     label = Label(root, text="")
     label.pack(padx=(0, 5), pady=(5, 0))
 
-    # Start Button
-    def startApp():
-        layout = selectedWallet.get()
-        if layout == "-Select Wallet-":
-            tkError.errorWindow(registeredWindow)
-        elif layout == "-New User-":
-            tkNewUser.runNewUser(registeredWindow)
-        else:
-            runRegisteredUser(root, layout)
+    # # Start Button
+    # def startApp():
+    #     layout = selectedWallet.get()
+    #     if layout == "-Select Wallet-":
+    #         tkError.errorWindow(registeredWindow)
+    #     elif layout == "-New User-":
+    #         tkNewUser.runNewUser(registeredWindow)
+    #     else:
+    #         runRegisteredUser(root, layout)
 
     # button = Button(registeredWindow, text="Start", command=startApp, height=1, width=6, font=("Cambria", 15, "bold"))
     # button.pack()
 
     # coin builder for current wallet
-    coinFrameHistory = Frame(registeredWindow, borderwidth=5, background="black")
+    coinFrameHistory = Frame(registeredWindow, borderwidth=1, background="black")
     coinFrameHistory.pack(pady=25)
     historyString = str(history.runWallets(layout, "Main"))
     historyLabel = Label(coinFrameHistory, text=historyString, justify=LEFT)
