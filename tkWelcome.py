@@ -9,7 +9,7 @@ import tkRegistered
 
 def startApp(root):
     root.title("StumpyLabs Crypto Wallet Counter")
-    root.geometry("1150x600")
+    root.geometry("1000x500")
     root.resizable(width=False, height=False)
 
     # Padding from top

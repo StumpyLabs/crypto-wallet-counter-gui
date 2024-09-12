@@ -33,9 +33,13 @@ def runNewUser(root):
     entry_email = Entry(newUserWindow, width=40)
     entry_email.pack(pady=5)
 
+
+
+
+
     # Button to trigger the display function
     submit_button = Button(newUserWindow, text="Submit", command=display_info)
-    submit_button.pack(pady=20)
+    submit_button.pack(pady=10)
 
     close_button = Button(newUserWindow, text="Close", command=newUserWindow.destroy)
     close_button.pack(pady=10)

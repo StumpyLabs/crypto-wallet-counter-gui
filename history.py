@@ -49,16 +49,16 @@ def runWallets(name, wallet):
 
     stringBuilder = ""
     for coin in coinListWallet:
-        coinAmount = searchCoinNameDB(name, coin, wallet)
+        coinAmount = round(searchCoinNameDB(name, coin, wallet), 2)
         coinValue = coingeckoCalls.coinRaw(coin)
 
         # coin amount
-        stringBuilder += (coin + ": " + str(coinAmount) + "\n")
-        coinTotal = searchCoinNameDB(name, coinListWallet[-1], wallet)
-        coinTotal = coinValue[coin]["usd"] * coinTotal
-        stringBuilder += (coinListWallet[-1] + ": Coin Amount: " + str(coinAmount) + " Coin Value: $" +
+        coinTotal = searchCoinNameDB(name, coin, wallet)
+        coinTotal = round(coinValue[coin]["usd"] * coinTotal, 2)
+        stringBuilder += (str(coin).title() + ": " + "\n" + "Coin Amount: " + str(coinAmount).format() + " Coin Value: $" +
                           str(coinValue[coin]["usd"]) + " Coin Total: $" + str(coinTotal) + "\n")
 
+    print(str(stringBuilder))
     return str(stringBuilder)
 
 

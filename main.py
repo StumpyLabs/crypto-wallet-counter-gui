@@ -15,7 +15,7 @@ def main():
     #history.searchDB()
     #history.nameListApp()
     #print(type("QWERTY", "Dvorak", "Colemak", "Workman"))
-    # runWallets("Casey Stumpf", "Big Money")
+    # runWallets("Casey Stumpf", "Main")
 
 
 if __name__ == '__main__':
