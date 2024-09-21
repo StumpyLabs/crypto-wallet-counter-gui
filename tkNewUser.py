@@ -72,20 +72,6 @@ def runNewUser(root):
             if coinChecker(entry_coin.get().lower()):
                 if amountChecker(entry_amount.get()):
                     tkRegistered.runRegisteredUser(root, "Casey Stumpf")
-                    #
-                    # # Values
-                    # customerName = entry_name.get()
-                    # customerCoin = entry_coin.get()
-                    # customerAmount = entry_amount.get()
-                    #
-                    # # building total amount from coingecko
-                    # coinValue, totalAmount = amountBuilder(customerCoin=entry_coin.get(), customerAmount=entry_amount.get())
-
-                    # adding values to dictionary and appending to list
-                    # post = {"customerName": customerName, "customerCoin": customerCoin, "coinValue": coinValue,
-                    #         "customerAmount": customerAmount, "totalAmount": totalAmount,
-                    #         "date&time": currentDateAndTime}
-                    # db.collection.insert_one(post)
 
 
     # coin checker
